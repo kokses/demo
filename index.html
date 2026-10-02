@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Бот онлайн-записи для стоматологии</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eaf3f5;--card:#fff;--ink:#0b2533;--mute:#58727f;--line:#d3e2e8;--acc:#0fb5ae;--acc2:#0a8782;--on:#fff;--bub:#e9f1f4;--ok:#dff6ee;--warn:#fff2cf;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#08171e;--card:#0f2630;--ink:#e8f3f6;--mute:#9db6c0;--line:#22404a;--bub:#17343f;--ok:#0f3a31;--warn:#3a3213}}
+:root[data-theme="dark"]{--bg:#08171e;--card:#0f2630;--ink:#e8f3f6;--mute:#9db6c0;--line:#22404a;--bub:#17343f;--ok:#0f3a31;--warn:#3a3213}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 Manrope,system-ui,-apple-system,"Segoe UI",sans-serif}
+.hero{background:radial-gradient(900px 400px at 85% -10%,#18b9c4 0,transparent 60%),linear-gradient(135deg,#071c28,#0f4a5a);color:#fff;padding:34px 18px 96px}
+.in{max-width:1060px;margin:0 auto}
+.pill{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.13);border-radius:999px;padding:7px 14px;font-size:14px;margin-bottom:16px}
+.dot{width:8px;height:8px;border-radius:50%;background:#4ade80;animation:p 1.6s infinite}@keyframes p{50%{opacity:.25}}
+.hero h1{font-size:clamp(28px,6vw,48px);line-height:1.08;margin:0 0 12px;font-weight:800;max-width:14em}
+.hero p{margin:0 0 20px;color:#cde5ea;max-width:34em}
+.nm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14px;color:#cde5ea}
+.nm input{font:inherit;padding:9px 14px;border-radius:12px;border:0;min-width:220px;max-width:100%;color:#0b2533}
+main{max-width:1060px;margin:-64px auto 0;padding:0 18px 56px}
+.grid{display:grid;grid-template-columns:minmax(0,390px) minmax(0,1fr);gap:22px;align-items:start}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.phone{background:#0b1b24;border-radius:36px;padding:9px;box-shadow:0 24px 50px rgba(5,25,35,.35)}
+.scr{background:var(--card);border-radius:28px;overflow:hidden;display:flex;flex-direction:column;height:580px}
+.ph-h{background:linear-gradient(135deg,var(--acc2),var(--acc));color:#fff;padding:14px 14px 12px;display:flex;gap:10px;align-items:center}
+.av{width:38px;height:38px;border-radius:50%;background:#fff;color:var(--acc2);display:grid;place-items:center;font-weight:800;flex:none}
+.ph-h div:nth-child(2){flex:1;min-width:0}.ph-h small{display:block;opacity:.9;font-size:12px}
+.rs{font:inherit;font-size:12px;border:1px solid rgba(255,255,255,.6);background:transparent;color:#fff;border-radius:999px;padding:4px 10px;cursor:pointer}
+.chat{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth}
+.m{max-width:86%;padding:9px 13px;border-radius:18px;animation:in .25s;white-space:pre-line;word-wrap:break-word}
+.m.b{background:var(--bub);border-bottom-left-radius:5px;align-self:flex-start}
+.m.u{background:var(--acc2);color:var(--on);border-bottom-right-radius:5px;align-self:flex-end}
+.m.t{display:flex;gap:4px;padding:13px}.m.t i{width:7px;height:7px;border-radius:50%;background:var(--mute);animation:bl 1s infinite}.m.t i:nth-child(2){animation-delay:.15s}.m.t i:nth-child(3){animation-delay:.3s}
+@keyframes bl{50%{opacity:.25;transform:translateY(-3px)}}
+.tk{background:var(--card);border:1.5px dashed var(--acc);align-self:flex-start;max-width:86%}
+.qr{display:flex;flex-wrap:wrap;gap:7px;align-self:flex-start;animation:in .25s}
+.qr button{font:inherit;font-size:14px;border:1.5px solid var(--acc);background:var(--card);color:var(--acc2);border-radius:999px;padding:7px 14px;cursor:pointer;transition:.15s}
+.qr button:hover:not(:disabled){background:var(--acc);color:var(--on)}
+.qr button:disabled{opacity:.35;cursor:not-allowed}.qr button.x{text-decoration:line-through}
+.bar{display:flex;gap:7px;padding:10px;border-top:1px solid var(--line)}
+.bar input{flex:1;font:inherit;padding:11px 14px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);min-width:0}
+.bar button{font:inherit;font-weight:800;border:0;border-radius:999px;width:44px;background:var(--acc2);color:var(--on);cursor:pointer}
+.bar input:disabled{opacity:.6}
+button:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.side{display:flex;flex-direction:column;gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}
+h2{font-size:17px;margin:0 0 12px;font-weight:800}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.stat{background:var(--bg);border-radius:14px;padding:10px;text-align:center}.stat b{display:block;font-size:26px;color:var(--acc2)}.stat span{font-size:12px;color:var(--mute)}
+.brd{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:7px;margin-bottom:14px}
+.sl{border-radius:10px;padding:7px 4px;text-align:center;font-size:13px;background:var(--bg);border:1px solid var(--line)}
+.sl.o{background:var(--line);color:var(--mute)}.sl.y{background:var(--acc);color:var(--on);border-color:var(--acc);font-weight:800}
+.note{background:var(--ok);border-left:4px solid var(--acc);border-radius:12px;padding:11px 13px;margin-bottom:9px;animation:in .3s}
+.note.l{background:var(--warn);border-color:#d9a300}.note b{display:block}.note small{display:block;color:var(--mute)}
+.empty{color:var(--mute);border:1px dashed var(--line);border-radius:12px;padding:18px;text-align:center}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.perks{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0;padding:0;list-style:none}
+@media(max-width:600px){.perks{grid-template-columns:1fr}}
+.perks li{background:var(--bg);border-radius:14px;padding:11px 13px;font-size:14px}.perks b{display:block}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}@media(max-width:600px){.cols{grid-template-columns:1fr}}
+label.t{display:block;font-size:13px;color:var(--mute);margin-bottom:5px}
+.cols input{font:inherit;width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.out{font-size:clamp(32px,6vw,48px);font-weight:800;color:var(--acc2);margin:8px 0 0}
+</style>
+</head>
+<body>
+<div class="hero"><div class="in">
+<div class="pill"><span class="dot"></span>Сейчас 23:47. Клиника закрыта, бот на связи</div>
+<h1>Пациенты записываются сами, пока вы спите</h1>
+<p>Попробуйте как пациент: запишитесь, получите напоминание, подтвердите визит. Справа сразу видно, что получает администратор.</p>
+<div class="nm"><label for="cn">Название вашей клиники:</label><input id="cn" value="Ваша клиника" maxlength="40"></div>
+</div></div>
+
+<main>
+<div class="grid">
+<div class="phone"><div class="scr">
+<div class="ph-h"><div class="av" id="av">К</div><div><b class="cn">Ваша клиника</b><small>онлайн-запись · отвечает за секунды</small></div><button class="rs" id="rs" type="button">Заново</button></div>
+<div class="chat" id="chat" aria-live="polite"></div>
+<form class="bar" id="bar"><input id="inp" placeholder="Выберите кнопку выше" autocomplete="off" disabled aria-label="Сообщение"><button type="button" id="snd" aria-label="Отправить">➤</button></form>
+</div></div>
+
+<div class="side">
+<section class="card" aria-live="polite">
+<h2>Панель администратора</h2>
+<div class="stats"><div class="stat"><b id="s1">0</b><span>записей</span></div><div class="stat"><b id="s2">0</b><span>заявок</span></div><div class="stat"><b id="s3">0</b><span>подтверждений</span></div></div>
+<div id="bt" style="font-size:13px;color:var(--mute);margin-bottom:8px"></div>
+<div class="brd" id="brd"></div>
+<div id="feed"></div>
+</section>
+<section class="card"><h2>Что получит <span class="cn">клиника</span></h2>
+<ul class="perks"><li><b>Запись 24/7</b>Услуга, врач, день, время</li><li><b>Без накладок</b>Занятое время закрывается само</li><li><b>Напоминание за сутки</b>Пациент подтверждает или переносит</li><li><b>Заявки ночью</b>Вопросы не теряются до утра</li></ul></section>
+</div>
+</div>
+
+<section class="card" style="margin-top:22px"><h2>Сколько <span class="cn">клиника</span> теряет на пропущенных обращениях</h2>
+<div class="cols">
+<div><label class="t" for="c1">Пропущенных обращений в месяц</label><input id="c1" type="number" min="0" value="40"></div>
+<div><label class="t" for="c2">Из них записались бы, %</label><input id="c2" type="number" min="0" max="100" value="30"></div>
+<div><label class="t" for="c3">Средний чек, ₽</label><input id="c3" type="number" min="0" value="6000"></div>
+</div>
+<div class="out" id="lost"></div><div id="yr" style="color:var(--mute)"></div>
+<p style="color:var(--mute);margin:14px 0 0;font-size:14px">Цифры условные: подставьте свои. Бот настраивается под ваши услуги, врачей и график.</p>
+</section>
+</main>
+
+<script>
+var SV=[["🦷","Консультация"],["✨","Профессиональная чистка"],["🛠","Лечение кариеса"],["🔩","Имплантация"],["😁","Брекеты"],["💎","Отбеливание"]];
+var DR=["Любой свободный врач","Терапевт","Хирург","Ортодонт"];
+var TM=["09:00","10:30","12:00","13:30","15:00","16:30","18:00"];
+var WD=["вс","пн","вт","ср","чт","пт","сб"],MN=["янв","фев","мар","апр","мая","июн","июл","авг","сен","окт","ноя","дек"];
+var $=function(i){return document.getElementById(i)};
+var S={},taken={},cnt={r:0,l:0,c:0},DAYS=[],clinic="Ваша клиника",gen=0,boardDay=0;
+function pad(n){return n<10?"0"+n:""+n}
+function key(d){return d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())}
+function lab(d){return WD[d.getDay()]+", "+d.getDate()+" "+MN[d.getMonth()]}
+(function(){var d=new Date();d.setDate(d.getDate()+1);while(DAYS.length<4){if(d.getDay()!==0)DAYS.push(new Date(d));d.setDate(d.getDate()+1)}})();
+function pre(d,t){var s=0,k=key(d)+t;for(var i=0;i<k.length;i++)s+=k.charCodeAt(i);return s%4===0}
+function busy(d,t){return pre(d,t)||!!taken[key(d)+t]}
+function sc(){var c=$("chat");c.scrollTop=c.scrollHeight}
+function msg(t,c){var m=document.createElement("div");m.className="m "+c;m.textContent=t;$("chat").appendChild(m);sc();return m}
+function say(t,next){var g=gen,tp=document.createElement("div");tp.className="m b t";tp.innerHTML="<i></i><i></i><i></i>";$("chat").appendChild(tp);sc();
+setTimeout(function(){if(g!==gen)return;tp.remove();msg(t,"b");if(next)next()},550)}
+function ch(items,fn,dis){var g=gen,w=document.createElement("div");w.className="qr";
+items.forEach(function(it){var b=document.createElement("button");b.type="button";b.textContent=it.l||it;
+if(dis&&dis(it)){b.disabled=true;b.className="x"}
+b.onclick=function(){if(g!==gen)return;w.querySelectorAll("button").forEach(function(x){x.disabled=true});msg(it.l||it,"u");fn(it)};w.appendChild(b)});
+$("chat").appendChild(w);sc()}
+function ask(kind,ph){S.wt=kind;var i=$("inp");i.disabled=false;i.placeholder=ph;i.focus()}
+function clr(){S.wt=null;var i=$("inp");i.disabled=true;i.value="";i.placeholder="Выберите кнопку выше"}
+function okPh(v){return v.replace(/\D/g,"").length>=10}
+function board(){var d=DAYS[boardDay];$("bt").textContent="Расписание на "+lab(d)+" (серое занято, цветное ваша запись)";
+$("brd").innerHTML=TM.map(function(t){var c=taken[key(d)+t]?"y":(pre(d,t)?"o":"");return '<div class="sl '+c+'">'+t+'</div>'}).join("")}
+function feed(cls,t,ls){var f=$("feed");if(f.querySelector(".empty"))f.innerHTML="";var n=document.createElement("div");n.className="note "+cls;
+var b=document.createElement("b");b.textContent=t;n.appendChild(b);ls.forEach(function(l){var s=document.createElement("small");s.textContent=l;n.appendChild(s)});f.insertBefore(n,f.firstChild)}
+function stats(){$("s1").textContent=cnt.r;$("s2").textContent=cnt.l;$("s3").textContent=cnt.c}
+function home(){S={};clr();say("Здравствуйте! Я помощник клиники «"+clinic+"». Работаю круглосуточно. Чем помочь?",function(){
+ch(["📅 Записаться","💰 Узнать стоимость","💬 Задать вопрос"],function(v){if(v.indexOf("Записаться")>0)svc();else lead(v.indexOf("стоимость")>0?"Расчёт стоимости":"Вопрос")})})}
+function svc(){say("Какая услуга вас интересует?",function(){ch(SV.map(function(s){return{l:s[0]+" "+s[1],n:s[1]}}),function(v){S.svc=v.n;doc()})})}
+function doc(){say("К какому врачу?",function(){ch(DR,function(v){S.doc=v;day()})})}
+function day(){say("Выберите удобный день:",function(){ch(DAYS.map(function(d,i){return{l:lab(d),d:d,i:i}}),function(v){S.day=v.d;boardDay=v.i;board();time()})})}
+function time(){say("Свободное время:",function(){ch(TM,function(v){S.time=v;S.at=key(S.day)+v;say("Как вас зовут?",function(){ask("name","Ваше имя")})},function(v){return busy(S.day,v)})})}
+function lead(k){S.kind=k;say(k==="Вопрос"?"Напишите ваш вопрос, я передам его администратору.":"Напишите, что планируете лечить, администратор подготовит расчёт.",function(){ask("q","Ваше сообщение")})}
+function done(){ch(["➕ Записаться ещё","🏠 В начало"],function(v){v.indexOf("начало")>0?home():svc()})}
+function fin(){taken[S.at]=1;cnt.r++;stats();board();
+feed("","Новая запись: "+S.svc,[S.name+", "+S.phone,lab(S.day)+", "+S.time+" · "+S.doc,"Напоминание пациенту уйдёт за сутки"]);
+say("Готово, вы записаны!\n\n🦷 "+S.svc+"\n📅 "+lab(S.day)+", "+S.time+"\n👩‍⚕️ "+S.doc+"\n\nЗа сутки до приёма пришлю напоминание.",function(){
+ch(["🔔 Показать напоминание за сутки","➕ Записаться ещё","🏠 В начало"],function(v){if(v.indexOf("напоминание")>0)remind();else if(v.indexOf("ещё")>0)svc();else home()})})}
+function remind(){say("🔔 Напоминание\n\nЗавтра в "+S.time+" вас ждёт «"+clinic+"»: "+S.svc+".\nПодтвердите визит, пожалуйста.",function(){
+ch(["✅ Приду","↪️ Перенести"],function(v){
+if(v.indexOf("Приду")>0){cnt.c++;stats();feed("","Пациент подтвердил визит",[S.name+", "+lab(S.day)+", "+S.time]);say("Спасибо, ждём вас!",done)}
+else{delete taken[S.at];cnt.r--;stats();board();feed("l","Пациент переносит запись",[S.name+", освободилось "+lab(S.day)+", "+S.time]);say("Хорошо, подберём другое время.",function(){day()})}})})}
+function send(e){if(e)e.preventDefault();var v=$("inp").value.trim(),k=S.wt;if(!v||!k)return;
+if(k==="name"){if(v.length<2){return}msg(v,"u");$("inp").value="";S.name=v;clr();say("Приятно познакомиться, "+v+"! Оставьте номер телефона:",function(){ask("phone","+7 900 000-00-00")})}
+else if(k==="phone"){msg(v,"u");$("inp").value="";if(!okPh(v)){clr();say("Проверьте номер: нужно минимум 10 цифр.",function(){ask("phone","+7 900 000-00-00")});return}S.phone=v;clr();fin()}
+else if(k==="q"){msg(v,"u");$("inp").value="";S.q=v;clr();say("Оставьте телефон, чтобы мы могли ответить:",function(){ask("lp","+7 900 000-00-00")})}
+else if(k==="lp"){msg(v,"u");$("inp").value="";if(!okPh(v)){clr();say("Проверьте номер: нужно минимум 10 цифр.",function(){ask("lp","+7 900 000-00-00")});return}
+clr();cnt.l++;stats();feed("l","Новая заявка: "+S.kind,[v,"Сообщение: "+S.q]);say("Спасибо! Администратор свяжется с вами в рабочее время.",done)}}
+$("bar").onsubmit=send;$("snd").onclick=send;$("snd").onmousedown=function(e){e.preventDefault()};
+function setName(){clinic=$("cn").value.trim()||"Ваша клиника";document.querySelectorAll(".cn").forEach(function(e){e.textContent=clinic});$("av").textContent=clinic.charAt(0).toUpperCase()}
+function reset(chatOnly){gen++;$("chat").innerHTML="";if(!chatOnly){taken={};cnt={r:0,l:0,c:0};stats();$("feed").innerHTML='<div class="empty">Запишитесь в чате, и здесь появится готовая карточка.</div>';boardDay=0;board()}home()}
+$("rs").onclick=function(){reset(false)};
+$("cn").oninput=function(){setName();clearTimeout(window._t);window._t=setTimeout(function(){reset(false)},700)};
+function calc(){var a=+$("c1").value||0,b=Math.min(+$("c2").value||0,100),c=+$("c3").value||0,m=Math.round(a*b/100*c);
+$("lost").textContent=m.toLocaleString("ru-RU")+" ₽ в месяц";$("yr").textContent="За год: "+(m*12).toLocaleString("ru-RU")+" ₽"}
+["c1","c2","c3"].forEach(function(i){$(i).oninput=calc});calc();
+var q=new URLSearchParams(location.search).get("c");if(q)$("cn").value=q.slice(0,40);
+setName();reset(false);
+</script>
+</body>
+</html>
